@@ -1,4 +1,4 @@
-package com.example.myfirstapptest
+package com.example.selfproductivityapp
 
 import org.junit.Test
 
