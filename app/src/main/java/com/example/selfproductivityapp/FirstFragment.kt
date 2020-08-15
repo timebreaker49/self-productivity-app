@@ -22,7 +22,6 @@ class FirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        this.setHasOptionsMenu(true) //this method only used in fragment to indicate to activity that it should have an options menu
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
@@ -47,11 +46,6 @@ class FirstFragment : Fragment() {
             val myToast = Toast.makeText(context, "Hello Toast", Toast.LENGTH_SHORT)
             myToast.show()
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item!!,
-            view!!.findNavController()) || super.onOptionsItemSelected(item)
     }
 
     private fun countMe(view: View) {
