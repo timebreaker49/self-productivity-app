@@ -7,7 +7,7 @@
     android:layout_alignParentBottom="false"
     android:background="@color/screenBackground"
     app:layout_collapseMode="none"
-    tools:context=".FirstFragment">
+    tools:context=".HomeFragment">
 
     <TextView
         android:id="@+id/textview_first"
