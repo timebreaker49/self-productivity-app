@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.navigation.findNavController
+import androidx.navigation.ui.onNavDestinationSelected
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,19 +22,16 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
     }
-override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menu.clear()
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when(item.itemId) {
-            else -> super.onOptionsItemSelected(item)
+
+        // delegates dropdown menu navigation to nav_host_fragment (points to nav_graph.xml)
+        return item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment))
+                || super.onOptionsItemSelected(item)
         }
-    }
 }
