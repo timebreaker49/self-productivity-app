@@ -1,20 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.selfproductivityapp.MainActivity" >
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_other"
-        android:orderInCategory="100"
-        android:title="@string/action_history"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/actio_godmode"
-        android:orderInCategory="500"
-        android:title="@string/activate_god_mode"
-        app:showAsAction="never" />
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context="com.example.selfproductivityapp.MainActivity" >
+<item
+    android:id="@+id/FirstFragment"
+    android:title="@string/action_summary"
+    app:showAsAction="never" />
+<item
+    android:id="@+id/SecondFragment"
+    android:title="@string/action_history"
+    app:showAsAction="never"/>
 </menu>

@@ -2,13 +2,13 @@ package com.example.selfproductivityapp
 
 import android.os.Build
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import androidx.annotation.RequiresApi
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import kotlinx.android.synthetic.main.fragment_second.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -24,6 +24,11 @@ class SecondFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_second, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

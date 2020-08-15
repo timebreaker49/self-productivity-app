@@ -3,12 +3,15 @@ package com.example.selfproductivityapp
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -19,7 +22,7 @@ class FirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        this.setHasOptionsMenu(true) //this method only used in fragment to indicate to activity that it should have an options menu
         return inflater.inflate(R.layout.fragment_first, container, false)
     }
 
@@ -44,6 +47,11 @@ class FirstFragment : Fragment() {
             val myToast = Toast.makeText(context, "Hello Toast", Toast.LENGTH_SHORT)
             myToast.show()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item!!,
+            view!!.findNavController()) || super.onOptionsItemSelected(item)
     }
 
     private fun countMe(view: View) {
