@@ -12,17 +12,17 @@
         tools:layout="@layout/home_fragment">
 
         <action
-            android:id="@+id/action_HomeFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_HomeFragment_to_HistoryFragment"
+            app:destination="@id/HistoryFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.selfproductivityapp.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/HistoryFragment"
+        android:name="com.example.selfproductivityapp.HistoryFragment"
+        android:label="@string/history_fragment_label"
+        tools:layout="@layout/history_fragment">
 
         <action
-            android:id="@+id/action_SecondFragment_to_HomeFragment"
+            android:id="@+id/action_HistoryFragment_to_HomeFragment"
             app:destination="@id/HomeFragment" />
         <argument
             android:name="myArg"

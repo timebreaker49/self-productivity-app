@@ -4,7 +4,7 @@
     <string name="action_summary">Summary</string>
     <!-- Strings used for fragments for navigation -->
     <string name="home_fragment_label">Home Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="history_fragment_label">History Fragment</string>
     <string name="previous">Previous</string>
     <string name="toast_button_text">Toast</string>
     <string name="random_button_text">Random</string>

@@ -7,7 +7,7 @@ tools:context="com.example.selfproductivityapp.MainActivity" >
     android:title="@string/action_summary"
     app:showAsAction="never" />
 <item
-    android:id="@+id/SecondFragment"
+    android:id="@+id/HistoryFragment"
     android:title="@string/action_history"
     app:showAsAction="never"/>
 </menu>

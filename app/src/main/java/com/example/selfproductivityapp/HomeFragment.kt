@@ -27,11 +27,11 @@ class HomeFragment : Fragment() {
 
         view.findViewById<Button>(R.id.random_button).setOnClickListener {
             //locate the action from navigation
-            findNavController().navigate(R.id.action_HomeFragment_to_SecondFragment)
+            findNavController().navigate(R.id.action_HomeFragment_to_HistoryFragment)
             //
             val showCountTextView = view.findViewById<TextView>(R.id.textview_first)
             val currentCount = showCountTextView.text.toString().toInt()
-            val action = HomeFragmentDirections.actionHomeFragmentToSecondFragment(currentCount)
+            val action = HomeFragmentDirections.actionHomeFragmentToHistoryFragment(currentCount)
             findNavController().navigate(action)
         }
 
