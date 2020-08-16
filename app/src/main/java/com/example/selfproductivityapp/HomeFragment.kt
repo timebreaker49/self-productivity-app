@@ -11,7 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.history_fragment.*
+import kotlinx.android.synthetic.main.home_fragment.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
