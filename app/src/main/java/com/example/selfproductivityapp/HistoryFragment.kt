@@ -33,11 +33,13 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val date = LocalDate.now()
+        //やらなきゃいけない：See if this is used in the calendar fragment -- if not, delete!
+        // 注意事項
+/*        val date = LocalDate.now()
         val formatter = DateTimeFormatter.ofPattern("MMMM yyyy")
         val text = date.format(formatter)
 
-        month.text = "Your $text"
+        month.text = "Your $text"*/
 
         view.findViewById<Button>(R.id.button_history).setOnClickListener {
             findNavController().navigate(R.id.action_HistoryFragment_to_HomeFragment)
