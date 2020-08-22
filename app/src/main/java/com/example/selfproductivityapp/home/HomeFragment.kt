@@ -1,4 +1,4 @@
-package com.example.selfproductivityapp
+package com.example.selfproductivityapp.home
 
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
+import com.example.selfproductivityapp.R
 import kotlinx.android.synthetic.main.home_fragment.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -41,11 +42,6 @@ class HomeFragment : Fragment() {
         view.findViewById<Button>(R.id.random_button).setOnClickListener {
             //locate the action from navigation
             findNavController().navigate(R.id.action_HomeFragment_to_HistoryFragment)
-            //
-            val showCountTextView = view.findViewById<TextView>(R.id.textview_first)
-            val currentCount = showCountTextView.text.toString().toInt()
-            val action = HomeFragmentDirections.actionHomeFragmentToHistoryFragment(currentCount)
-            findNavController().navigate(action)
         }
 
         view.findViewById<Button>(R.id.count_button).setOnClickListener {

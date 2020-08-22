@@ -7,7 +7,7 @@
     android:layout_alignParentBottom="false"
     android:background="@color/screenBackground"
     app:layout_collapseMode="none"
-    tools:context=".HomeFragment">
+    tools:context=".home.HomeFragment">
 
     <TextView
         android:id="@+id/month"

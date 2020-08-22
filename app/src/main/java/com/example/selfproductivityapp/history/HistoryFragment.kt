@@ -1,4 +1,4 @@
-package com.example.selfproductivityapp
+package com.example.selfproductivityapp.history
 
 import android.os.Build
 import android.os.Bundle
@@ -6,15 +6,14 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
 import android.widget.CalendarView
-import android.widget.CalendarView.OnDateChangeListener
 import android.widget.TextView
-import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.history_fragment.*
+import com.example.selfproductivityapp.R
+import com.example.selfproductivityapp.databinding.HistoryFragmentBinding
 import java.text.DateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
@@ -22,27 +21,24 @@ import java.util.*
  */
 class HistoryFragment : Fragment() {
 
-    lateinit var calendarView: CalendarView
-    lateinit var dateView: TextView
+    private lateinit var binding: HistoryFragmentBinding
+    private lateinit var viewModel: HistoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val root = inflater.inflate(R.layout.history_fragment, container, false)
 
-        val calendar = Calendar.getInstance()
-        dateView = root.findViewById(R.id.dateView)
-        calendarView = root.findViewById(R.id.calendarView)
-        calendarView.setOnDateChangeListener { _, year, month, day ->
-            calendar.set(year,month,day)
-            val dateFormatter = DateFormat.getDateInstance(DateFormat.LONG)
-            val formattedDate = dateFormatter.format(calendar.time)
-            dateView.text = formattedDate
-        }
+        val binding: HistoryFragmentBinding = DataBindingUtil.inflate(inflater, R.layout.history_fragment, container, false)
 
-        return root
+        // initializing our view model
+        viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
+
+        binding.historyViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +52,10 @@ class HistoryFragment : Fragment() {
 
         view.findViewById<Button>(R.id.button_history).setOnClickListener {
             findNavController().navigate(R.id.action_HistoryFragment_to_HomeFragment)
+        }
+
+        view.findViewById<CalendarView>(R.id.calendarView).setOnDateChangeListener { calendarView, i, i2, i3 ->
+            findNavController().navigate(R.id.action_HistoryFragment_to_third)
         }
     }
 }
