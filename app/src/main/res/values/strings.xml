@@ -12,6 +12,7 @@
     <string name="hello_world">Hello World!</string>
     <string name="random_heading">Here is a random number between 0 and %d.</string>
     <string name="count_button_text">Count</string>
+    <string name="day_format">Day Selected: %d</string>
 
     <string name="month"></string>
     <!-- TODO: Remove or change this placeholder text -->

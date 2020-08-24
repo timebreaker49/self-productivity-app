@@ -1,9 +1,11 @@
 package com.example.selfproductivityapp.history
 
 import android.util.Log
+import android.widget.CalendarView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import java.text.DateFormat
 import java.util.*
 
@@ -24,8 +26,17 @@ class HistoryViewModel() : ViewModel() {
         val dateFormatter = DateFormat.getDateInstance(DateFormat.LONG)
         val formattedDate = dateFormatter.format(calendar.time)
         _date.value = formattedDate
-/*        calendarView.setOnDateChangeListener { _, year, month, day ->
-            calendar.set(year,month,day)
-        }*/
+
     }
+
+/*  --> Haven't figured out how to make the onClick binding work for functions that require
+        multiple parameters
+    fun onSelectedDate(view: CalendarView, year: Int, month: Int, day:Int) {
+        val calendar = Calendar.getInstance()
+            calendar.set(year,month,day)
+        val dateFormatter = DateFormat.getDateInstance(DateFormat.LONG)
+        val formattedDate = dateFormatter.format(calendar.time)
+        _date.value = formattedDate
+        // when a user selects a date from the calendar
+    }*/
 }

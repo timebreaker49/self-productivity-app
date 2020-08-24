@@ -28,14 +28,17 @@
             android:name="myArg"
             app:argType="integer" />
         <action
-            android:id="@+id/action_HistoryFragment_to_third"
-            app:destination="@id/third" />
+            android:id="@+id/action_HistoryFragment_to_DayFragment"
+            app:destination="@id/DayFragment" />
     </fragment>
     <fragment
-        android:id="@+id/third"
-        android:name="com.example.selfproductivityapp.Third"
-        android:label="fragment_third"
-        tools:layout="@layout/fragment_third" />
-
-
+        android:id="@+id/DayFragment"
+        android:name="com.example.selfproductivityapp.day.DayFragment"
+        android:label="day_fragment"
+        tools:layout="@layout/day_fragment" >
+        <argument
+            android:name="selectedDate"
+            android:defaultValue="0"
+            app:argType="string" />
+    </fragment>
 </navigation>
