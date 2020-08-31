@@ -40,5 +40,20 @@
             android:name="selectedDate"
             android:defaultValue="0"
             app:argType="string" />
+        <action
+            android:id="@+id/action_DayFragment_to_EntryFragment"
+            app:destination="@id/EntryFragment" />
+
     </fragment>
+    <fragment
+        android:id="@+id/EntryFragment"
+        android:name="com.example.selfproductivityapp.entry.EntryFragment"
+        android:label="entry_fragment"
+        tools:layout="@layout/entry_fragment">
+        <argument
+            android:name="selectedDate"
+            android:defaultValue="0"
+            app:argType="string" />
+    </fragment>
+
 </navigation>
