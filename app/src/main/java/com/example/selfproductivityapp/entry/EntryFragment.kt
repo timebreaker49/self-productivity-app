@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.selfproductivityapp.R
+import com.example.selfproductivityapp.database.ActivitiesDatabase
 import com.example.selfproductivityapp.databinding.EntryFragmentBinding
 
 class EntryFragment: Fragment() {
 
     private lateinit var viewModel: EntryViewModel
-    private lateinit var viewModelFactory: EntryViewModel.EntryViewModelFactory
+    private lateinit var viewModelFactory: EntryViewModelFactory
     private lateinit var binding: EntryFragmentBinding
+    private lateinit var date: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +33,18 @@ class EntryFragment: Fragment() {
             container, false
         )
 
-        viewModelFactory = EntryViewModel.EntryViewModelFactory(EntryFragmentArgs.fromBundle(requireArguments()).selectedDate)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(EntryViewModel::class.java)
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = ActivitiesDatabase.getInstance(application).activitiesDatabaseDao
+
+        val arguments = EntryFragmentArgs.fromBundle(requireArguments()).selectedDate
+
+        val viewModelFactory = EntryViewModelFactory(arguments,  dataSource)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(EntryViewModel::class.java)
 
         binding.entryViewModel = viewModel
+
+        date = binding.dateOfEntry
 
         return binding.root
     }

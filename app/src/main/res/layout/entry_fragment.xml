@@ -186,6 +186,7 @@
                 android:layout_below="@id/new_entry_button_wrapper">
 
             <TextView
+                android:id="@+id/dateOfEntry"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"

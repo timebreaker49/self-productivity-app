@@ -1,13 +1,20 @@
 package com.example.selfproductivityapp.entry
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import com.example.selfproductivityapp.database.ActivitiesDatabaseDao
 import com.example.selfproductivityapp.day.DayViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 
-class EntryViewModel(selectedDate: String): ViewModel() {
+class EntryViewModel(private val selectedDate: String, val database: ActivitiesDatabaseDao
+                     ): ViewModel() {
+
+    private var viewModelJob = Job()
+
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val _date = MutableLiveData<String>()
     val date: LiveData<String>
@@ -15,15 +22,5 @@ class EntryViewModel(selectedDate: String): ViewModel() {
 
     init {
         _date.value = selectedDate
-    }
-
-
-    class EntryViewModelFactory (private val selectedDate: String) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(EntryViewModel::class.java)){
-                return EntryViewModel(selectedDate) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
     }
 }

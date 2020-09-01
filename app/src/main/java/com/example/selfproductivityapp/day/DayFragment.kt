@@ -20,7 +20,6 @@ class DayFragment : Fragment() {
 
     private lateinit var viewModel: DayViewModel
     private lateinit var viewModelFactory: DayViewModel.DayViewModelFactory
-    private lateinit var binding: DayFragmentBinding
     private lateinit var date: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
