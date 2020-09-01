@@ -12,6 +12,10 @@ class DayViewModel(selectedDate: String): ViewModel() {
     val date: LiveData<String>
         get() = _date
 
+    private val _addEntry = MutableLiveData<Boolean>()
+    val addEntry: LiveData<Boolean>
+        get() = _addEntry
+
     init {
         _date.value = selectedDate
     }
@@ -23,5 +27,9 @@ class DayViewModel(selectedDate: String): ViewModel() {
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
+    }
+
+    fun addEntryClicked() {
+        _addEntry.value = true
     }
 }

@@ -165,6 +165,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/new_entry_button_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/description_wrapper"
@@ -172,10 +173,25 @@
                 android:layout_margin="10dp">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/save_new_entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/add_new_entry_button_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_margin="50dp"
+                android:layout_height="100dp"
+                android:layout_below="@id/new_entry_button_wrapper">
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:textSize="28sp"
+                android:text="@{entryViewModel.date}"/>
+
             </RelativeLayout>
 
         </RelativeLayout>

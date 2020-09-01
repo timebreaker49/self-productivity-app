@@ -14,7 +14,6 @@ class EntryViewModel(selectedDate: String): ViewModel() {
         get() = _date
 
     init {
-        Log.i("EntryViewModel", "EntryViewModel activated")
         _date.value = selectedDate
     }
 

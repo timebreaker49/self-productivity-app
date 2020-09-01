@@ -30,8 +30,10 @@ class EntryFragment: Fragment() {
             container, false
         )
 
-        viewModelFactory = EntryViewModel.EntryViewModelFactory(EntryFragmentArgs.fromBundle(arguments!!).selectedDate)
+        viewModelFactory = EntryViewModel.EntryViewModelFactory(EntryFragmentArgs.fromBundle(requireArguments()).selectedDate)
         viewModel = ViewModelProvider(this, viewModelFactory).get(EntryViewModel::class.java)
+
+        binding.entryViewModel = viewModel
 
         return binding.root
     }
