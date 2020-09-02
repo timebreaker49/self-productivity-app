@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "daily_activities_table")
 data class ActivitiesDay (
     @PrimaryKey(autoGenerate = true)
-    var entryId: Long = 0L,
+    var entryId: Int = 0,
 
     @ColumnInfo(name = "start_time_milli")
-    val startTimeMilli: Long = 0L,
+    var startTimeMilli: Long = 0L,
 
     @ColumnInfo(name = "end_time_milli")
-    var endTimeMill: Long = 0L,
+    var endTimeMilli: Long = 0L,
 
     @ColumnInfo(name = "description")
     var description: String = "",

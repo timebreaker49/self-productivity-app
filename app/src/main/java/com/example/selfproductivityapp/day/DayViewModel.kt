@@ -21,6 +21,7 @@ class DayViewModel(selectedDate: String): ViewModel() {
     }
 
     class DayViewModelFactory (private val selectedDate: String) : ViewModelProvider.Factory {
+        @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(DayViewModel::class.java)){
                 return DayViewModel(selectedDate) as T

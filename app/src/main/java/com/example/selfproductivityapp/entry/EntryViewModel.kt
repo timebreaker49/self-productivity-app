@@ -1,5 +1,6 @@
 package com.example.selfproductivityapp.entry
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -7,8 +8,8 @@ import androidx.lifecycle.*
 import com.example.selfproductivityapp.database.ActivitiesDatabaseDao
 import com.example.selfproductivityapp.database.ActivitiesDay
 import kotlinx.coroutines.*
-import java.sql.Timestamp
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class EntryViewModel(private val selectedDate: String, val database: ActivitiesDatabaseDao
@@ -18,6 +19,13 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    val newThing: ActivitiesDay
+
+    private val brandNew: ActivitiesDay
+        get() {
+            return ActivitiesDay()
+        }
+
     private val _date = MutableLiveData<String>()
     val date: LiveData<String>
         get() = _date
@@ -26,7 +34,9 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
     val startTime: MutableLiveData<String>
         get() = _startTime
 
-    val newThing: ActivitiesDay
+    private val _endTime = MutableLiveData<String>()
+    val endTime: MutableLiveData<String>
+        get() = _endTime
 
     init {
         _date.value = selectedDate
@@ -34,10 +44,13 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
         newThing = brandNew
     }
 
-    val brandNew: ActivitiesDay
-        get() {
-            return ActivitiesDay()
-        }
+    @SuppressLint("SimpleDateFormat")
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun timeToDateTime(enteredTime: String?): Long {
+        val completeStart = "${date.value} $enteredTime"
+        val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm")
+        return LocalDateTime.parse(completeStart, formatter).toEpochSecond(ZoneOffset.UTC)
+    }
 
     private suspend fun insert(entry: ActivitiesDay) {
         withContext(Dispatchers.IO) {
@@ -47,21 +60,11 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun onAddNewEntry() {
+        newThing.startTimeMilli = timeToDateTime(_startTime.value)
+        newThing.endTimeMilli = timeToDateTime(_endTime.value)
 
-        val pattern = "MMMM d, yyyy HH:mm"
-        val completeStart = date.value + " " + startTime.value
-        Log.i("CompleteStart!!", "Here is the new entry: ${completeStart}!")
 
-        val formatter = DateTimeFormatter.ofPattern(pattern)
-        Log.i("Formatter!!", "Here is the new entry: ${formatter}!")
-
-        val localDateTime = LocalDateTime.parse(completeStart, formatter)
-        Log.i("LocalDateTime!!", "Here is the new entry: ${localDateTime}!")
-
-        val finalTime = DateTimeFormatter.ofPattern(pattern).format(localDateTime)
-        Log.i("FinalDateTime!!", "||||||||||||    Final date time        ||||||||||||||||: ${finalTime}!")
-
-        Log.i("newEntry!!", "Here is the new entry: ${date.value}!")
+        Log.i("newEntry!!", "Here is the new entry: ${newThing}!")
         viewModelScope.launch {
             insert(newThing)
 
