@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.selfproductivityapp.database.ActivitiesDatabaseDao
 
 class EntryViewModelFactory (private val selectedDate: String, private val database: ActivitiesDatabaseDao): ViewModelProvider.Factory{
+    @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(EntryViewModel::class.java)){
             return EntryViewModel(selectedDate, database) as T

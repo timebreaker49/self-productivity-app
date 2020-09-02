@@ -91,7 +91,8 @@
                     android:ems="10"
                     android:gravity="center"
                     android:hint="08:00"
-                    android:inputType="time" />
+                    android:inputType="time"
+                    android:text="@={entryViewModel.startTime}"/>
 
             </RelativeLayout>
 
@@ -119,7 +120,8 @@
                     android:layout_alignParentRight="true"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="@string/category_hint" />
+                    android:hint="@string/category_hint"
+                    android:text="@={entryViewModel.newThing.category}"/>
 
             </RelativeLayout>
 
@@ -157,7 +159,7 @@
                         android:layout_margin="10dp"
                         android:ems="10"
                         android:gravity="start|top"
-                        android:hint="Enter activity description here."
+                        android:text="@={entryViewModel.newThing.description}"
                         android:inputType="textMultiLine" />
 
                 </LinearLayout>
@@ -176,6 +178,7 @@
                     android:id="@+id/save_new_entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> entryViewModel.onAddNewEntry()}"
                     android:text="@string/add_new_entry_button_text" />
             </RelativeLayout>
 

@@ -35,14 +35,15 @@ class EntryFragment: Fragment() {
 
         val application = requireNotNull(this.activity).application
 
-        val dataSource = ActivitiesDatabase.getInstance(application).activitiesDatabaseDao
-
         val arguments = EntryFragmentArgs.fromBundle(requireArguments()).selectedDate
+
+        val dataSource = ActivitiesDatabase.getInstance(application).activitiesDatabaseDao
 
         val viewModelFactory = EntryViewModelFactory(arguments,  dataSource)
         val viewModel = ViewModelProvider(this, viewModelFactory).get(EntryViewModel::class.java)
 
         binding.entryViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         date = binding.dateOfEntry
 

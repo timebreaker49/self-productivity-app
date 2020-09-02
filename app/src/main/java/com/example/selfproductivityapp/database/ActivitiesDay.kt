@@ -10,10 +10,10 @@ data class ActivitiesDay (
     var entryId: Long = 0L,
 
     @ColumnInfo(name = "start_time_milli")
-    val startTimeMilli: Long = System.currentTimeMillis(),
+    val startTimeMilli: Long = 0L,
 
     @ColumnInfo(name = "end_time_milli")
-    var endTimeMill: Long = startTimeMilli,
+    var endTimeMill: Long = 0L,
 
     @ColumnInfo(name = "description")
     var description: String = "",
