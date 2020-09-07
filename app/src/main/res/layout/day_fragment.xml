@@ -16,6 +16,20 @@
     android:layout_height="match_parent"
     tools:context=".day.DayFragment">
 
+
+    <TextView
+        android:id="@+id/entry_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/date"
+        app:layout_constraintBottom_toTopOf="@id/new_entry_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@{dayViewModel.entryString}"/>
+
+
+
     <TextView
         android:id="@+id/selected_date"
         android:layout_width="match_parent"
@@ -31,9 +45,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/selected_date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1"/>
 
     <Button
+        android:id="@+id/new_entry_button"
         android:layout_width="181dp"
         android:layout_height="60dp"
         android:onClick="@{() -> dayViewModel.addEntryClicked()}"
@@ -41,7 +57,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
+        app:layout_constraintTop_toBottomOf="@+id/date"
+        app:layout_constraintVertical_bias="0.8"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

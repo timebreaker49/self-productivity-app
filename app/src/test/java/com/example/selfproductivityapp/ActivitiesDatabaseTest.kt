@@ -1,7 +1,6 @@
 package com.example.selfproductivityapp
 
 import androidx.room.Room
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.selfproductivityapp.database.ActivitiesDatabase
 import com.example.selfproductivityapp.database.ActivitiesDatabaseDao
 import androidx.test.platform.app.InstrumentationRegistry
@@ -41,7 +40,7 @@ class ActivitiesDatabaseTest {
     fun insertAndGetDay() {
         val day = ActivitiesDay()
         activitiesDao.insert(day)
-        val today = activitiesDao.getDay()
+        val today = activitiesDao.getAllEntries()
         assertEquals(today?.description, "")
     }
 

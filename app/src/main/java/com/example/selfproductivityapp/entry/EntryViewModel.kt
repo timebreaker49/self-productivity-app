@@ -64,10 +64,8 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
         newThing.endTimeMilli = timeToDateTime(_endTime.value)
 
 
-        Log.i("newEntry!!", "Here is the new entry: ${newThing}!")
         viewModelScope.launch {
             insert(newThing)
-
         }
     }
 }

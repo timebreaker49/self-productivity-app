@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.selfproductivityapp.R
+import com.example.selfproductivityapp.database.ActivitiesDatabase
 import com.example.selfproductivityapp.databinding.DayFragmentBinding
 
 
@@ -36,7 +37,12 @@ class DayFragment : Fragment() {
             container, false
         )
 
-        viewModelFactory = DayViewModel.DayViewModelFactory(DayFragmentArgs.fromBundle(requireArguments()).selectedDate)
+        val application = requireNotNull(this.activity).application
+
+
+        val dataSource = ActivitiesDatabase.getInstance(application).activitiesDatabaseDao
+
+        viewModelFactory = DayViewModel.DayViewModelFactory(DayFragmentArgs.fromBundle(requireArguments()).selectedDate, dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DayViewModel::class.java)
 
         viewModel.addEntry.observe(viewLifecycleOwner, Observer<Boolean> { isClicked ->
@@ -44,7 +50,10 @@ class DayFragment : Fragment() {
         })
 
         binding.dayViewModel = viewModel
+        binding.lifecycleOwner = this
         date = binding.date
+
+
 
         return binding.root
     }
