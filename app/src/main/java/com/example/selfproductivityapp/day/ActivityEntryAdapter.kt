@@ -24,19 +24,13 @@ class ActivityEntryAdapter: androidx.recyclerview.widget.ListAdapter<ActivitiesD
         holder.bind(item)
     }
 
-    class ViewHolder private constructor(val binding: ListItemEntryBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder private constructor(private val binding: ListItemEntryBinding) : RecyclerView.ViewHolder(binding.root) {
 
         @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(
-            item: ActivitiesDay
-        ) {
-            val res = itemView.context.resources
-//            binding.entry = item
-//            binding.executePendingBindings()
-            binding.listStartTime.text = convertEpochToTimeFormatted(item.startTimeMilli)
-            binding.listEndTime.text = convertEpochToTimeFormatted(item.endTimeMilli)
+        fun bind(item: ActivitiesDay) {
+            binding.entry = item
+            binding.executePendingBindings()
             binding.listDescriptionText.text = item.description
-            binding.duration.text = convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
             binding.category.text = item.category
         }
 
@@ -48,10 +42,7 @@ class ActivityEntryAdapter: androidx.recyclerview.widget.ListAdapter<ActivitiesD
             }
         }
     }
-
-
 }
-
 
 class EntryDiffCallback : DiffUtil.ItemCallback<ActivitiesDay>() {
     override fun areItemsTheSame(oldItem: ActivitiesDay, newItem: ActivitiesDay): Boolean {
