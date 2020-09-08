@@ -24,6 +24,14 @@ fun convertEpochToTimeFormatted(timeMilli: Long): String {
     return simpleTimeFormat.format(epochToDateTime)
 }
 
+@SuppressLint("SimpleDateFormat")
+@RequiresApi(Build.VERSION_CODES.O)
+fun timeToEpochTime(date: String, enteredTime: String?): Long {
+    val completeStart = "$date $enteredTime"
+    val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm")
+    return LocalDateTime.parse(completeStart, formatter).toEpochSecond(ZoneOffset.UTC)
+}
+
 @RequiresApi(Build.VERSION_CODES.O)
 fun formatActivity(entries: List<ActivitiesDay>, resources: Resources): Spanned {
     val sb = StringBuilder()

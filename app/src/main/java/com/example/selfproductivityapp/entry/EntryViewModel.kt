@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.selfproductivityapp.database.ActivitiesDatabaseDao
 import com.example.selfproductivityapp.database.ActivitiesDay
+import com.example.selfproductivityapp.timeToEpochTime
 import kotlinx.coroutines.*
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -44,14 +45,6 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
         newThing = brandNew
     }
 
-    @SuppressLint("SimpleDateFormat")
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun timeToDateTime(enteredTime: String?): Long {
-        val completeStart = "${date.value} $enteredTime"
-        val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy HH:mm")
-        return LocalDateTime.parse(completeStart, formatter).toEpochSecond(ZoneOffset.UTC)
-    }
-
     private suspend fun insert(entry: ActivitiesDay) {
         withContext(Dispatchers.IO) {
             database.insert(entry)
@@ -60,10 +53,10 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun onAddNewEntry() {
-        newThing.startTimeMilli = timeToDateTime(_startTime.value)
-        newThing.endTimeMilli = timeToDateTime(_endTime.value)
+        newThing.startTimeMilli = timeToEpochTime(date.value.toString(), _startTime.value)
+        newThing.endTimeMilli = timeToEpochTime(date.value.toString(), _endTime.value)
 
-
+        Log.i("refactoredTime", "$newThing")
         viewModelScope.launch {
             insert(newThing)
         }
