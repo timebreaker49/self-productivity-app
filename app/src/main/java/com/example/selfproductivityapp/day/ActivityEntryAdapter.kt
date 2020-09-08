@@ -1,37 +1,62 @@
 package com.example.selfproductivityapp.day
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ListAdapter
-import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.selfproductivityapp.R
-import com.example.selfproductivityapp.TextItemViewHolder
+import com.example.selfproductivityapp.convertEpochToTimeFormatted
 import com.example.selfproductivityapp.database.ActivitiesDay
 import com.example.selfproductivityapp.databinding.ListItemEntryBinding
 
-class ActivityEntryAdapter: RecyclerView.Adapter<TextItemViewHolder>() {
-    var data = listOf<ActivitiesDay>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
+class ActivityEntryAdapter: androidx.recyclerview.widget.ListAdapter<ActivitiesDay, ActivityEntryAdapter.ViewHolder>(EntryDiffCallback()) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder.from(parent)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.bind(item)
+    }
+
+    class ViewHolder private constructor(val binding: ListItemEntryBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun bind(
+            item: ActivitiesDay
+        ) {
+//            binding.entry = item
+//            binding.executePendingBindings()
+            binding.listStartTime.text = convertEpochToTimeFormatted(item.startTimeMilli)
+            binding.listEndTime.text = convertEpochToTimeFormatted(item.endTimeMilli)
+            binding.listDescriptionText.text = item.description
+            binding.duration.text = item.entryId.toString()
+            binding.category.text = item.category
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextItemViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-
-        val view = layoutInflater.inflate(R.layout.text_item_view, parent, false) as TextView
-        return TextItemViewHolder(view)
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ListItemEntryBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: TextItemViewHolder, position: Int) {
-        val item = data[position]
 
-        holder.textView.text = item.description.toString()
+}
+
+
+class EntryDiffCallback : DiffUtil.ItemCallback<ActivitiesDay>() {
+    override fun areItemsTheSame(oldItem: ActivitiesDay, newItem: ActivitiesDay): Boolean {
+        return oldItem.entryId == newItem.entryId
     }
 
-    override fun getItemCount() = data.size
-
+    override fun areContentsTheSame(oldItem: ActivitiesDay, newItem: ActivitiesDay): Boolean {
+        return oldItem == newItem
+    }
 
 }

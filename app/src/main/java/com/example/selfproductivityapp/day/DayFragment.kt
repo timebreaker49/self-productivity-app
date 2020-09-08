@@ -38,22 +38,29 @@ class DayFragment : Fragment() {
         )
 
         val application = requireNotNull(this.activity).application
-
-
         val dataSource = ActivitiesDatabase.getInstance(application).activitiesDatabaseDao
 
         viewModelFactory = DayViewModel.DayViewModelFactory(DayFragmentArgs.fromBundle(requireArguments()).selectedDate, dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DayViewModel::class.java)
 
+        val adapter = ActivityEntryAdapter()
+
+        binding.entryList.adapter = adapter
+        binding.dayViewModel = viewModel
+        binding.lifecycleOwner = this
+
         viewModel.addEntry.observe(viewLifecycleOwner, Observer<Boolean> { isClicked ->
             if (isClicked) addNewEntry()
         })
 
-        binding.dayViewModel = viewModel
-        binding.lifecycleOwner = this
+        viewModel.activities.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
+
+
         date = binding.date
-
-
 
         return binding.root
     }

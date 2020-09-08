@@ -17,16 +17,16 @@
     tools:context=".day.DayFragment">
 
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/entry_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="#F6F0F0"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/date"
         app:layout_constraintBottom_toTopOf="@id/new_entry_button"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="@{dayViewModel.entryString}"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date" />
 
 
 
