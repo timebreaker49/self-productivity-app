@@ -12,6 +12,9 @@ import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.selfproductivityapp.R
 import com.example.selfproductivityapp.database.ActivitiesDatabase
 import com.example.selfproductivityapp.databinding.DayFragmentBinding
@@ -44,6 +47,14 @@ class DayFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(DayViewModel::class.java)
 
         val adapter = ActivityEntryAdapter()
+
+        val dividerItemDecoration = DividerItemDecoration(
+            requireActivity(), LinearLayoutManager.VERTICAL
+        )
+        with(binding.entryList) {
+            addItemDecoration(dividerItemDecoration)
+            itemAnimator = DefaultItemAnimator()
+        }
 
         binding.entryList.adapter = adapter
         binding.dayViewModel = viewModel
