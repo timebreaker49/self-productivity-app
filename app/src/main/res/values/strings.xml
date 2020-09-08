@@ -26,4 +26,7 @@
     <string name="category_hint">Exercise</string>
     <string name="activity_description_field_text">Activity Description</string>
     <string name="add_new_entry_button_text">add new entry</string>
+
+    <string name="minutes">Duration: %02dm</string>
+    <string name="hours_and_minutes">Duration: %02dh %02dm</string>
 </resources>

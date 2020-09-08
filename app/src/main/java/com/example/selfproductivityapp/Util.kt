@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import android.util.Log
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.text.HtmlCompat
@@ -14,6 +15,7 @@ import com.example.selfproductivityapp.database.ActivitiesDay
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 @SuppressLint("SimpleDateFormat")
@@ -32,6 +34,23 @@ fun timeToEpochTime(date: String, enteredTime: String?): Long {
     return LocalDateTime.parse(completeStart, formatter).toEpochSecond(ZoneOffset.UTC)
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Resources): String {
+    val durationMilli = (endTimeMilli - startTimeMilli) * 1000
+    val minute = (durationMilli / (1000 * 60)) % 60
+    val hour = (durationMilli / (1000 * 60 * 60)) % 24
+
+    return when {
+        hour > 0 -> {
+            res.getString(R.string.hours_and_minutes, hour, minute)
+        }
+        else -> {
+            res.getString(R.string.minutes, minute)
+        }
+    }
+}
+
+/*
 @RequiresApi(Build.VERSION_CODES.O)
 fun formatActivity(entries: List<ActivitiesDay>, resources: Resources): Spanned {
     val sb = StringBuilder()
@@ -55,4 +74,4 @@ fun formatActivity(entries: List<ActivitiesDay>, resources: Resources): Spanned 
     } else {
         return HtmlCompat.fromHtml(sb.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
-}
+}*/

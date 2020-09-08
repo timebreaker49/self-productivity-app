@@ -4,8 +4,10 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.selfproductivityapp.convertDurationToFormatted
 import com.example.selfproductivityapp.convertEpochToTimeFormatted
 import com.example.selfproductivityapp.database.ActivitiesDay
 import com.example.selfproductivityapp.databinding.ListItemEntryBinding
@@ -28,12 +30,13 @@ class ActivityEntryAdapter: androidx.recyclerview.widget.ListAdapter<ActivitiesD
         fun bind(
             item: ActivitiesDay
         ) {
+            val res = itemView.context.resources
 //            binding.entry = item
 //            binding.executePendingBindings()
             binding.listStartTime.text = convertEpochToTimeFormatted(item.startTimeMilli)
             binding.listEndTime.text = convertEpochToTimeFormatted(item.endTimeMilli)
             binding.listDescriptionText.text = item.description
-            binding.duration.text = item.entryId.toString()
+            binding.duration.text = convertDurationToFormatted(item.startTimeMilli, item.endTimeMilli, res)
             binding.category.text = item.category
         }
 

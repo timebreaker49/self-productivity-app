@@ -56,7 +56,6 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
         newThing.startTimeMilli = timeToEpochTime(date.value.toString(), _startTime.value)
         newThing.endTimeMilli = timeToEpochTime(date.value.toString(), _endTime.value)
 
-        Log.i("refactoredTime", "$newThing")
         viewModelScope.launch {
             insert(newThing)
         }

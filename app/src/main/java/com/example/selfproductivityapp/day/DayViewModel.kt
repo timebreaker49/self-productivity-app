@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.selfproductivityapp.database.ActivitiesDatabaseDao
 import com.example.selfproductivityapp.database.ActivitiesDay
-import com.example.selfproductivityapp.formatActivity
 import kotlinx.coroutines.*
 
 class DayViewModel(selectedDate: String,
@@ -39,12 +38,6 @@ class DayViewModel(selectedDate: String,
 
         }
     }
-
-    val entryString = Transformations.map(activities) {activities ->
-        formatActivity(activities, application.resources)
-    }
-
-
 
     class DayViewModelFactory (private val selectedDate: String,
     private val dataSource: ActivitiesDatabaseDao, private val application: Application) : ViewModelProvider.Factory {
