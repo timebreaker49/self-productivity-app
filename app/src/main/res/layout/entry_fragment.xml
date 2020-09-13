@@ -97,7 +97,7 @@
                     android:gravity="center"
                     android:hint="08:00"
                     android:inputType="time"
-                    android:text="@{entryViewModel.endTime}"/>
+                    android:text="@={entryViewModel.endTime}"/>
 
             </RelativeLayout>
 
@@ -183,7 +183,7 @@
                     android:id="@+id/save_new_entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> entryViewModel.onAddNewEntry()}"
+                    android:onClick="@{() -> entryViewModel.onAddUpdateEntry()}"
                     android:text="@string/add_new_entry_button_text" />
             </RelativeLayout>
 
