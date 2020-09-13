@@ -1,26 +1,23 @@
 package com.example.selfproductivityapp.entry
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.*
+import com.example.selfproductivityapp.convertEpochToTimeFormatted
 import com.example.selfproductivityapp.database.ActivitiesDatabaseDao
 import com.example.selfproductivityapp.database.ActivitiesDay
 import com.example.selfproductivityapp.timeToEpochTime
 import kotlinx.coroutines.*
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
-class EntryViewModel(private val selectedDate: String, val database: ActivitiesDatabaseDao
-                     ): ViewModel() {
+@RequiresApi(Build.VERSION_CODES.O)
+class EntryViewModel(
+    private val selectedDate: String?,
+    val database: ActivitiesDatabaseDao,
+    private val chosenEntry: ActivitiesDay?): ViewModel() {
 
-    private var viewModelJob = Job()
-
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-    val newThing: ActivitiesDay
+    var newThing: ActivitiesDay
 
     private val brandNew: ActivitiesDay
         get() {
@@ -28,7 +25,7 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
         }
 
     private val _date = MutableLiveData<String>()
-    val date: LiveData<String>
+    val date: MutableLiveData<String>
         get() = _date
 
     private val _startTime = MutableLiveData<String>()
@@ -40,9 +37,14 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
         get() = _endTime
 
     init {
-        _date.value = selectedDate
-        _startTime.value = ""
-        newThing = brandNew
+        isDateSet()
+        if (chosenEntry == null) {
+            newThing = brandNew
+        } else {
+            newThing = chosenEntry.copy()
+            _startTime.value = convertEpochToTimeFormatted(newThing.startTimeMilli)
+            _endTime.value = convertEpochToTimeFormatted(newThing.endTimeMilli)
+        }
     }
 
     private suspend fun insert(entry: ActivitiesDay) {
@@ -52,12 +54,27 @@ class EntryViewModel(private val selectedDate: String, val database: ActivitiesD
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun onAddNewEntry() {
-        newThing.startTimeMilli = timeToEpochTime(date.value.toString(), _startTime.value)
-        newThing.endTimeMilli = timeToEpochTime(date.value.toString(), _endTime.value)
+    fun transformTimeToStore() {
+        newThing.startTimeMilli = timeToEpochTime("September 1, 2020", _startTime.value)
+        newThing.endTimeMilli = timeToEpochTime(_date.value.toString(), _endTime.value)
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun onAddNewEntry() {
+        transformTimeToStore()
         viewModelScope.launch {
             insert(newThing)
+        }
+    }
+
+    private fun isDateSet() {
+        Log.i("SelectedDate", "Selected date: $selectedDate")
+        if (selectedDate == 0.toString()) {
+            Log.i("DateError", "no date set")
+            _date.value = "September 1, 2020"
+            // would ideally like to call function to extract start date from startTimeMilli
+        } else {
+            _date.value = selectedDate
         }
     }
 }

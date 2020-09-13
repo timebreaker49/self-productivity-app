@@ -9,6 +9,10 @@
         <variable
             name="entryViewModel"
             type="com.example.selfproductivityapp.entry.EntryViewModel" />
+        <variable
+            name="util"
+            type="com.example.selfproductivityapp.day.BindingUtilsKt" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -64,7 +68,7 @@
                     android:gravity="center"
                     android:hint="08:00"
                     android:inputType="time"
-                    android:text="@={entryViewModel.startTime}" />
+                    android:text="@={entryViewModel.startTime}"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -93,7 +97,7 @@
                     android:gravity="center"
                     android:hint="08:00"
                     android:inputType="time"
-                    android:text="@={entryViewModel.endTime}" />
+                    android:text="@{entryViewModel.endTime}"/>
 
             </RelativeLayout>
 
