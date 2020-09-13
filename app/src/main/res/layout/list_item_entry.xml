@@ -10,6 +10,10 @@
             name="entry"
             type="com.example.selfproductivityapp.database.ActivitiesDay" />
 
+        <variable
+            name="chosenEntry"
+            type="com.example.selfproductivityapp.day.ActivityEntryAdapter.EntryClickListener" />
+
     </data>
 
 
@@ -17,7 +21,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
->
+    android:onClick="@{() -> chosenEntry.onEntryClicked(entry)}">
 
     <FrameLayout
         android:layout_width="4dp"
@@ -35,7 +39,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:startTimeFormatted="@{entry}"
+        app:getStartTimeFormatted="@{entry}"
         tools:text="startTime" />
 
     <TextView
@@ -46,7 +50,7 @@
         android:layout_marginStart="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/list_start_time"
-        app:endTimeFormatted="@{entry}"
+        app:getEndTimeFormatted="@{entry}"
         tools:text="endTime"
         android:layout_marginLeft="20dp" />
 
@@ -60,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/list_start_time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@id/list_end_time"
-        app:durationFormatted="@{entry}"
+        app:getDurationFormatted="@{entry}"
         tools:text="duration" />
 
     <TextView

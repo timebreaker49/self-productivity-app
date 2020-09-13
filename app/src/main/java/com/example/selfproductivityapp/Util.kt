@@ -4,18 +4,8 @@ import android.annotation.SuppressLint
 import java.time.*
 import android.content.res.Resources
 import android.os.Build
-import android.text.Html
-import android.text.Spanned
-import android.util.Log
-import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.core.text.HtmlCompat
-import androidx.recyclerview.widget.RecyclerView
-import com.example.selfproductivityapp.database.ActivitiesDay
-import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
-import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 @SuppressLint("SimpleDateFormat")
