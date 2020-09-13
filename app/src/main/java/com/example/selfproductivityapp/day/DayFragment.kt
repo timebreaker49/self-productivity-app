@@ -9,18 +9,25 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentFactory
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.transaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.example.selfproductivityapp.R
 import com.example.selfproductivityapp.database.ActivitiesDatabase
+import com.example.selfproductivityapp.database.ActivitiesDay
 import com.example.selfproductivityapp.databinding.DayFragmentBinding
+import com.example.selfproductivityapp.entry.EntryFragment
+import com.example.selfproductivityapp.entry.EntryViewModel
 
+const val CHOSEN_ENTRY = "chosenEntry"
 
-class DayFragment : Fragment() {
+class DayFragment() : Fragment(), ActivityEntryAdapter.EntryClickListener {
 
     private lateinit var viewModel: DayViewModel
     private lateinit var viewModelFactory: DayViewModel.DayViewModelFactory
@@ -46,7 +53,7 @@ class DayFragment : Fragment() {
         viewModelFactory = DayViewModel.DayViewModelFactory(DayFragmentArgs.fromBundle(requireArguments()).selectedDate, dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DayViewModel::class.java)
 
-        val adapter = ActivityEntryAdapter()
+        val adapter = ActivityEntryAdapter(this)
 
         val dividerItemDecoration = DividerItemDecoration(
             requireActivity(), LinearLayoutManager.VERTICAL
@@ -70,10 +77,27 @@ class DayFragment : Fragment() {
             }
         })
 
-
         date = binding.date
 
         return binding.root
+    }
+
+    override fun onEntryClicked(entry: ActivitiesDay) {
+        val args = Bundle()
+        args.putParcelable(CHOSEN_ENTRY, entry)
+        val frag = EntryFragment()
+        frag.arguments = args
+        Log.i("entryClicked!", "entryId: ${entry.entryId}")
+
+        openEntryFragment(frag)
+    }
+
+    private fun openEntryFragment(fragment: EntryFragment) {
+        val childFragmentManager = activity?.supportFragmentManager
+        childFragmentManager?.beginTransaction()
+            ?.add(R.id.main_container, fragment)
+            ?.addToBackStack(null)
+            ?.commit()
     }
 
     private fun addNewEntry() {
