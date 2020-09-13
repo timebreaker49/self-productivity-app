@@ -36,8 +36,8 @@ class EntryViewModel(
         get() = _endTime
 
     init {
-        setDate()
         initializeEntry()
+        setDate()
     }
 
     // Init function
@@ -47,8 +47,8 @@ class EntryViewModel(
             mIsEdit = false
         } else {
             newThing = chosenEntry.copy()
-            _startTime.value = convertEpochToTimeFormatted(newThing.startTimeMilli)
-            _endTime.value = convertEpochToTimeFormatted(newThing.endTimeMilli)
+            _startTime.value = convertEpochToTimeFormatted(newThing.startTimeMilli,"HH:mm")
+            _endTime.value = convertEpochToTimeFormatted(newThing.endTimeMilli, "HH:mm")
             mIsEdit = true
         }
     }
@@ -81,8 +81,7 @@ class EntryViewModel(
     }
 
     // helper methods
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun transformTimeToStore() {
+    private fun transformTimeToStore() {
         // converting string time entries to long epoch
         newThing.startTimeMilli = timeToEpochTime("September 1, 2020", _startTime.value)
         newThing.endTimeMilli = timeToEpochTime(_date.value.toString(), _endTime.value)
@@ -90,9 +89,7 @@ class EntryViewModel(
 
     private fun setDate() {
         if (selectedDate == 0.toString()) {
-            Log.i("DateError", "no date set")
-            _date.value = "September 1, 2020"
-            // would ideally like to call function to extract start date from startTimeMilli
+            _date.value = convertEpochToTimeFormatted(newThing.startTimeMilli, "MMMM d, yyyy")
         } else {
             _date.value = selectedDate
         }
