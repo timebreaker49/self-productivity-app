@@ -1,24 +1,30 @@
 package com.example.selfproductivityapp.entry
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.databinding.BindingAdapter
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.InverseBindingListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.selfproductivityapp.R
 import com.example.selfproductivityapp.database.ActivitiesDatabase
 import com.example.selfproductivityapp.database.ActivitiesDay
 import com.example.selfproductivityapp.databinding.EntryFragmentBinding
 import com.example.selfproductivityapp.day.CHOSEN_ENTRY
+import com.example.selfproductivityapp.hideKeyboard
 
+const val SELECTED_DATE = "selectedDate"
+
+@RequiresApi(Build.VERSION_CODES.O)
 class EntryFragment: Fragment() {
 
     private lateinit var date: TextView
+    private lateinit var viewModel: EntryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,13 +49,27 @@ class EntryFragment: Fragment() {
         val dataSource = ActivitiesDatabase.getInstance(application).activitiesDatabaseDao
 
         val viewModelFactory = EntryViewModelFactory(arguments,  dataSource, chosenEntry)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(EntryViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(EntryViewModel::class.java)
 
         binding.entryViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        viewModel.saveEntry.observe(viewLifecycleOwner, Observer { isClicked ->
+            if (isClicked) saveEntry()
+        })
+
         date = binding.dateOfEntry
 
         return binding.root
+    }
+
+    private fun saveEntry() {
+        viewModel.saveEntry()
+        // removes the existing fragment, revealing the date list
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.remove(this)
+            ?.addToBackStack(null)
+            ?.commit()
+        view?.hideKeyboard()
     }
 }

@@ -35,6 +35,10 @@ class EntryViewModel(
     val endTime: MutableLiveData<String>
         get() = _endTime
 
+    private val _saveEntry = MutableLiveData<Boolean>()
+    val saveEntry: LiveData<Boolean>
+        get() = _saveEntry
+
     init {
         initializeEntry()
         setDate()
@@ -66,8 +70,7 @@ class EntryViewModel(
         }
     }
 
-    // Model operations
-    fun onAddUpdateEntry() {
+    fun saveEntry() {
         transformTimeToStore()
         if (!mIsEdit) {
             viewModelScope.launch {
@@ -78,6 +81,11 @@ class EntryViewModel(
                 update(newThing)
             }
         }
+    }
+
+    // Model operations
+    fun onAddUpdateEntry() {
+        _saveEntry.value = true
     }
 
     // helper methods

@@ -1,5 +1,6 @@
 package com.example.selfproductivityapp.day
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,23 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentFactory
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.transaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.example.selfproductivityapp.R
 import com.example.selfproductivityapp.database.ActivitiesDatabase
 import com.example.selfproductivityapp.database.ActivitiesDay
 import com.example.selfproductivityapp.databinding.DayFragmentBinding
 import com.example.selfproductivityapp.entry.EntryFragment
-import com.example.selfproductivityapp.entry.EntryViewModel
 
 const val CHOSEN_ENTRY = "chosenEntry"
 
@@ -82,6 +79,7 @@ class DayFragment() : Fragment(), ActivityEntryAdapter.EntryClickListener {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onEntryClicked(entry: ActivitiesDay) {
         val args = Bundle()
         args.putParcelable(CHOSEN_ENTRY, entry)
@@ -93,9 +91,9 @@ class DayFragment() : Fragment(), ActivityEntryAdapter.EntryClickListener {
     }
 
     private fun openEntryFragment(fragment: EntryFragment) {
-        val childFragmentManager = activity?.supportFragmentManager
-        childFragmentManager?.beginTransaction()
-            ?.add(R.id.main_container, fragment)
+        val fragmentManager = activity?.supportFragmentManager
+        fragmentManager?.beginTransaction()
+            ?.replace(R.id.main_container, fragment)
             ?.addToBackStack(null)
             ?.commit()
     }
