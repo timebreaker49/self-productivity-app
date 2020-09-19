@@ -41,7 +41,7 @@ class EntryViewModel(
 
     init {
         initializeEntry()
-        setDate()
+        _date.value = selectedDate
     }
 
     // Init function
@@ -93,13 +93,5 @@ class EntryViewModel(
         // converting string time entries to long epoch
         newThing.startTimeMilli = timeToEpochTime("September 1, 2020", _startTime.value)
         newThing.endTimeMilli = timeToEpochTime(_date.value.toString(), _endTime.value)
-    }
-
-    private fun setDate() {
-        if (selectedDate == 0.toString()) {
-            _date.value = convertEpochToTimeFormatted(newThing.startTimeMilli, "MMMM d, yyyy")
-        } else {
-            _date.value = selectedDate
-        }
     }
 }

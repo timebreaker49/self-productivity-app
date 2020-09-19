@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +23,14 @@ import com.example.selfproductivityapp.entry.EntryFragment
 
 const val CHOSEN_ENTRY = "chosenEntry"
 
+@RequiresApi(Build.VERSION_CODES.O)
 class DayFragment() : Fragment(), ActivityEntryAdapter.EntryClickListener {
 
     private lateinit var viewModel: DayViewModel
     private lateinit var viewModelFactory: DayViewModel.DayViewModelFactory
     private lateinit var date: TextView
+    private val args = Bundle()
+    private val frag = EntryFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +67,7 @@ class DayFragment() : Fragment(), ActivityEntryAdapter.EntryClickListener {
         binding.lifecycleOwner = this
 
         viewModel.addEntry.observe(viewLifecycleOwner, Observer<Boolean> { isClicked ->
-            if (isClicked) addNewEntry()
+            if (isClicked) openEntryFragment(frag)
         })
 
         viewModel.activities.observe(viewLifecycleOwner, Observer {
@@ -79,18 +81,20 @@ class DayFragment() : Fragment(), ActivityEntryAdapter.EntryClickListener {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onEntryClicked(entry: ActivitiesDay) {
-        val args = Bundle()
         args.putParcelable(CHOSEN_ENTRY, entry)
-        val frag = EntryFragment()
         frag.arguments = args
-        Log.i("entryClicked!", "entryId: ${entry.entryId}")
-
         openEntryFragment(frag)
     }
 
+    private fun addDate() { // used to set and pass the date to the next fragment
+        frag.arguments = args
+        val dateLong = DayFragmentArgs.fromBundle(requireArguments()).selectedDate
+        args.putString("selectedDate", dateLong)
+    }
+
     private fun openEntryFragment(fragment: EntryFragment) {
+        addDate()
         val fragmentManager = activity?.supportFragmentManager
         fragmentManager?.beginTransaction()
             ?.replace(R.id.main_container, fragment)
@@ -98,10 +102,5 @@ class DayFragment() : Fragment(), ActivityEntryAdapter.EntryClickListener {
             ?.commit()
     }
 
-    private fun addNewEntry() {
-        val selectedDate = date.text.toString()
-        val action = DayFragmentDirections.actionDayFragmentToEntryFragment(selectedDate)
-        NavHostFragment.findNavController(this).navigate(action)
-    }
 
 }
