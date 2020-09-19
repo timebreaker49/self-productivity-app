@@ -2,6 +2,7 @@ package com.example.selfproductivityapp.entry
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.selfproductivityapp.OnBackPressedListener
 import com.example.selfproductivityapp.R
 import com.example.selfproductivityapp.database.ActivitiesDatabase
 import com.example.selfproductivityapp.database.ActivitiesDay
@@ -18,10 +20,9 @@ import com.example.selfproductivityapp.databinding.EntryFragmentBinding
 import com.example.selfproductivityapp.day.CHOSEN_ENTRY
 import com.example.selfproductivityapp.hideKeyboard
 
-const val SELECTED_DATE = "selectedDate"
 
 @RequiresApi(Build.VERSION_CODES.O)
-class EntryFragment: Fragment() {
+class EntryFragment: Fragment(), OnBackPressedListener {
 
     private lateinit var date: TextView
     private lateinit var viewModel: EntryViewModel
@@ -71,5 +72,13 @@ class EntryFragment: Fragment() {
             ?.addToBackStack(null)
             ?.commit()
         view?.hideKeyboard()
+    }
+
+    override fun onBackPressed() {
+        Log.i("baddest", "Show em who!")
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.remove(this)
+            ?.addToBackStack(null)
+            ?.commit()
     }
 }
