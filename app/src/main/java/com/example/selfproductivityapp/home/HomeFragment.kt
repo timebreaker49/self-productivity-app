@@ -39,34 +39,5 @@ class HomeFragment : Fragment() {
 
         month.text = "Your $text"
 
-        view.findViewById<Button>(R.id.random_button).setOnClickListener {
-            //locate the action from navigation
-            findNavController().navigate(R.id.action_HomeFragment_to_HistoryFragment)
-        }
-
-        view.findViewById<Button>(R.id.count_button).setOnClickListener {
-            countMe(view)
-        }
-
-        view.findViewById<Button>(R.id.toast_button).setOnClickListener {
-            val myToast = Toast.makeText(context, "Hello Toast", Toast.LENGTH_SHORT)
-            myToast.show()
-        }
-    }
-
-    private fun countMe(view: View) {
-
-        //Get the text view
-        val showCountTextView = view.findViewById<TextView>(R.id.textview_first)
-
-        // Get the value of the text view
-        val countString = showCountTextView.text.toString()
-
-        //Convert value of the string to an int
-        var count = countString.toInt()
-        count++
-
-        //Display the new value in the text view
-        showCountTextView.text = count.toString()
     }
 }
