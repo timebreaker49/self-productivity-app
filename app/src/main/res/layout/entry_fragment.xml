@@ -38,7 +38,7 @@
                     android:layout_marginBottom="20dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Add new entry"
+                    android:text="@{String.valueOf(entryViewModel.addOrUpdate)}"
                     android:textSize="38sp" />
             </LinearLayout>
 
@@ -184,7 +184,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> entryViewModel.onAddUpdateEntry()}"
-                    android:text="@string/add_new_entry_button_text" />
+                    android:text="@{String.valueOf(entryViewModel.addOrUpdate)}" />
             </RelativeLayout>
 
             <RelativeLayout
