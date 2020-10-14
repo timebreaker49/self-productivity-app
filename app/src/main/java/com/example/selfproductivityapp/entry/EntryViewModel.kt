@@ -27,6 +27,10 @@ class EntryViewModel(
     val date: MutableLiveData<String>
         get() = _date
 
+    private val _addOrUpdate = MutableLiveData<String>()
+    val addOrUpdate: MutableLiveData<String>
+        get() = _addOrUpdate
+
     private val _startTime = MutableLiveData<String>()
     val startTime: MutableLiveData<String>
         get() = _startTime
@@ -49,11 +53,13 @@ class EntryViewModel(
         if (chosenEntry == null) {
             newThing = brandNew
             mIsEdit = false
+            _addOrUpdate.value = "Add new entry"
         } else {
             newThing = chosenEntry.copy()
             _startTime.value = convertEpochToTimeFormatted(newThing.startTimeMilli,"HH:mm")
             _endTime.value = convertEpochToTimeFormatted(newThing.endTimeMilli, "HH:mm")
             mIsEdit = true
+            _addOrUpdate.value = "Update entry"
         }
     }
 
