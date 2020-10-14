@@ -95,10 +95,10 @@ class DayFragment() : Fragment(), ActivityEntryAdapter.EntryClickListener {
 
     private fun openEntryFragment(fragment: EntryFragment) {
         addDate()
+        Log.i("dayToEntry", "hypothetically opening entry fragment")
         val fragmentManager = activity?.supportFragmentManager
         fragmentManager?.beginTransaction()
             ?.replace(R.id.main_container, fragment)
-            ?.addToBackStack(null)
             ?.commit()
     }
 

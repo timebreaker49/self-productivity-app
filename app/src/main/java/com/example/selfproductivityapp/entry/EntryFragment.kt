@@ -22,7 +22,7 @@ import com.example.selfproductivityapp.hideKeyboard
 
 
 @RequiresApi(Build.VERSION_CODES.O)
-class EntryFragment: Fragment(), OnBackPressedListener {
+class EntryFragment: Fragment() {
 
     private lateinit var date: TextView
     private lateinit var viewModel: EntryViewModel
@@ -69,16 +69,15 @@ class EntryFragment: Fragment(), OnBackPressedListener {
         // removes the existing fragment, revealing the date list
         activity?.supportFragmentManager?.beginTransaction()
             ?.remove(this)
-            ?.addToBackStack(null)
             ?.commit()
         view?.hideKeyboard()
     }
 
-    override fun onBackPressed() {
-        Log.i("baddest", "Show em who!")
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.remove(this)
-            ?.addToBackStack(null)
-            ?.commit()
-    }
+//    override fun onBackPressed() {
+//        Log.i("baddest", "Show em who!")
+//        activity?.supportFragmentManager?.beginTransaction()
+//            ?.remove(this)
+//            ?.addToBackStack(null)
+//            ?.commit()
+//    }
 }
