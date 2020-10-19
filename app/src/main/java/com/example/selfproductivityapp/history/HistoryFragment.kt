@@ -14,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.selfproductivityapp.R
 import com.example.selfproductivityapp.databinding.HistoryFragmentBinding
-import kotlinx.android.synthetic.main.home_fragment.*
 import java.text.DateFormat
 import java.util.*
 
@@ -44,7 +43,7 @@ class HistoryFragment : Fragment() {
 
         calendarView.setOnDateChangeListener { view, year, month, day ->
             onSelectedDate(view, year, month, day)
-            sendSelectedDate()
+            navHistoryToDayFrag()
         }
 
         binding.historyViewModel = viewModel
@@ -68,7 +67,7 @@ class HistoryFragment : Fragment() {
 
     }
 
-    private fun sendSelectedDate() {
+    private fun navHistoryToDayFrag() {
         val selectedDate = date.text.toString()
         val action = HistoryFragmentDirections.actionHistoryFragmentToDayFragment(selectedDate)
         NavHostFragment.findNavController(this).navigate(action)

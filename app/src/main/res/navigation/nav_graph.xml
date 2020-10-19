@@ -54,6 +54,16 @@
             android:name="selectedDate"
             android:defaultValue="0"
             app:argType="string" />
+        <argument
+            android:name="chosenEntry"
+            app:argType="com.example.selfproductivityapp.database.ActivitiesDay"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_EntryFragment_to_DayFragment"
+            app:destination="@id/DayFragment"
+            app:popUpTo="@id/DayFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

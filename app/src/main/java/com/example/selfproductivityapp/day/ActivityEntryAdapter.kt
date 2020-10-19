@@ -48,7 +48,7 @@ class ActivityEntryAdapter(private val mListener: EntryClickListener) : androidx
     }
 
     interface EntryClickListener {
-        fun onEntryClicked(chosenEntry: ActivitiesDay)
+        fun navDayToEntryFrag(chosenEntry: ActivitiesDay?)
     }
 }
 

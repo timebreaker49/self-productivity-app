@@ -97,7 +97,7 @@ class EntryViewModel(
     // helper methods
     private fun transformTimeToStore() {
         // converting string time entries to long epoch
-        newThing.startTimeMilli = timeToEpochTime("September 1, 2020", _startTime.value)
+        newThing.startTimeMilli = timeToEpochTime(_date.value.toString(), _startTime.value)
         newThing.endTimeMilli = timeToEpochTime(_date.value.toString(), _endTime.value)
     }
 }

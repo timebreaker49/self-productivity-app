@@ -37,17 +37,4 @@ class MainActivity : AppCompatActivity() {
         return item.onNavDestinationSelected(findNavController(R.id.nav_host_fragment))
                 || super.onOptionsItemSelected(item)
         }
-// TODO: Figure out what to do with the below
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    override fun onBackPressed() {
-//        Log.i("backPressed", "back button listener activated~")
-//        val found = this.supportFragmentManager.findFragmentById(R.id.main_container)
-//        if (found is EntryFragment) {
-//            Log.i("we out here", "out herrrrrreeeeeeee")
-//            (found as OnBackPressedListener).onBackPressed()
-//        } else {
-//            super.onBackPressed()
-//        }
-//    }
 }
