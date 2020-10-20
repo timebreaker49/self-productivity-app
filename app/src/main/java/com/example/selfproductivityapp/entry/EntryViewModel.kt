@@ -1,12 +1,12 @@
 package com.example.selfproductivityapp.entry
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.selfproductivityapp.convertEpochToTimeFormatted
 import com.example.selfproductivityapp.database.ActivitiesDatabaseDao
 import com.example.selfproductivityapp.database.ActivitiesDay
+import com.example.selfproductivityapp.isValidTime
 import com.example.selfproductivityapp.timeToEpochTime
 import kotlinx.coroutines.*
 
@@ -42,6 +42,10 @@ class EntryViewModel(
     private val _saveEntry = MutableLiveData<Boolean>()
     val saveEntry: LiveData<Boolean>
         get() = _saveEntry
+
+    private val toastLiveData = MutableLiveData<ValueWrapper<String>>()
+    val toast : LiveData<ValueWrapper<String>>
+        get() = toastLiveData
 
     init {
         initializeEntry()
@@ -89,6 +93,26 @@ class EntryViewModel(
         }
     }
 
+    fun validateEntry() : Boolean {
+        if (!isValidTime(_startTime.value)) {
+            toastLiveData.value = ValueWrapper("Valid start time is required")
+            return false
+        }
+        if (!isValidTime(_endTime.value)) {
+            toastLiveData.value = ValueWrapper("Valid end time is required")
+            return false
+        }
+        if (newThing.category.isNullOrEmpty()) {
+            toastLiveData.value = ValueWrapper("Category is required")
+            return false
+        }
+        if (newThing.description.isNullOrEmpty()) {
+            toastLiveData.value = ValueWrapper("Description is required")
+            return false
+        }
+        return true
+    }
+
     // Model operations
     fun onAddUpdateEntry() {
         _saveEntry.value = true
@@ -100,4 +124,16 @@ class EntryViewModel(
         newThing.startTimeMilli = timeToEpochTime(_date.value.toString(), _startTime.value)
         newThing.endTimeMilli = timeToEpochTime(_date.value.toString(), _endTime.value)
     }
+}
+
+// creates a wrapper for the live data toast event which I only want to show once
+open class ValueWrapper<T>(private val value: T) {
+    private var isConsumed = false
+    fun get(): T? =
+        if (isConsumed) {
+            null
+        } else {
+            isConsumed = true
+            value
+        }
 }

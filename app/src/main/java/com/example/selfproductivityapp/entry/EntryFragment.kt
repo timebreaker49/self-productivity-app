@@ -2,12 +2,12 @@ package com.example.selfproductivityapp.entry
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -46,9 +46,7 @@ class EntryFragment: Fragment() {
         // setting variables from day fragment arguments
         val chosenEntry: ActivitiesDay? = EntryFragmentArgs.fromBundle(requireArguments()).chosenEntry
         val arguments = EntryFragmentArgs.fromBundle(requireArguments()).selectedDate
-
         val dataSource = ActivitiesDatabase.getInstance(application).activitiesDatabaseDao
-
         val viewModelFactory = EntryViewModelFactory(arguments,  dataSource, chosenEntry)
         viewModel = ViewModelProvider(this, viewModelFactory).get(EntryViewModel::class.java)
 
@@ -56,7 +54,16 @@ class EntryFragment: Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.saveEntry.observe(viewLifecycleOwner, Observer { isClicked ->
-            if (isClicked) saveEntry()
+            if (isClicked) {
+                if (!isValidEntry()) return@Observer
+                saveEntry()
+            }
+        })
+
+        viewModel.toast.observe(viewLifecycleOwner, Observer { it ->
+            it.get()?.let{
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
         })
 
         date = binding.dateOfEntry
@@ -71,9 +78,12 @@ class EntryFragment: Fragment() {
         }
     }
 
+    private fun isValidEntry(): Boolean {
+        return viewModel.validateEntry()
+    }
+
     private fun saveEntry() {
         viewModel.saveEntry()
-        // removes the existing fragment, revealing the date list
         navEntryToDayFrag()
         view?.hideKeyboard()
     }

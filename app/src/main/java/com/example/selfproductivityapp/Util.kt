@@ -4,9 +4,14 @@ import android.annotation.SuppressLint
 import java.time.*
 import android.content.res.Resources
 import android.os.Build
+import android.util.Patterns
+import android.widget.EditText
 import androidx.annotation.RequiresApi
+import androidx.core.widget.doAfterTextChanged
 import java.time.format.DateTimeFormatter
-
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+import android.util.Log
 
 @SuppressLint("SimpleDateFormat")
 @RequiresApi(Build.VERSION_CODES.O)
@@ -37,4 +42,12 @@ fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Re
             res.getString(R.string.minutes, minute)
         }
     }
+}
+
+fun isValidTime(enteredTime: String?): Boolean {
+    val regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]"
+    val pattern = Pattern.compile(regex)
+    if (enteredTime == null) return false
+    val m = pattern.matcher(enteredTime)
+    return m.matches()
 }
