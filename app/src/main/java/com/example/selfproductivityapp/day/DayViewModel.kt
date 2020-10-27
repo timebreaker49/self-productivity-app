@@ -24,19 +24,14 @@ class DayViewModel(selectedDate: String,
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var today = MutableLiveData<ActivitiesDay?>()
-
-    val activities = database.getAllEntries()
+    var today: LiveData<List<ActivitiesDay>> = getSpecifiedDate(selectedDate)
 
     init {
         _date.value = selectedDate
-        initializeDay()
     }
 
-    private fun initializeDay() {
-        uiScope.launch {
-
-        }
+    private fun getSpecifiedDate(selectedDate: String) : LiveData<List<ActivitiesDay>> {
+        return database.get(selectedDate)
     }
 
     class DayViewModelFactory (private val selectedDate: String,

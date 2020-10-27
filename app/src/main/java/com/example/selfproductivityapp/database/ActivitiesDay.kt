@@ -22,9 +22,13 @@ data class ActivitiesDay (
     var description: String = "",
 
     @ColumnInfo(name = "category")
-    var category: String = ""
+    var category: String = "",
+
+    @ColumnInfo(name = "date")
+    var date: String = ""
+
 ): Parcelable {
     fun copy() : ActivitiesDay {
-        return ActivitiesDay(entryId, startTimeMilli, endTimeMilli, description, category)
+        return ActivitiesDay(entryId, startTimeMilli, endTimeMilli, description, category, date)
     }
 }

@@ -2,6 +2,7 @@ package com.example.selfproductivityapp.day
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -67,7 +68,7 @@ class DayFragment() : Fragment(), ActivityEntryAdapter.EntryClickListener {
             if (isClicked) navDayToEntryFrag(null)
         })
 
-        viewModel.activities.observe(viewLifecycleOwner, Observer {
+        viewModel.today.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
             }

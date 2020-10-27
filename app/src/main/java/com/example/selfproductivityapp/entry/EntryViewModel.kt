@@ -123,6 +123,7 @@ class EntryViewModel(
         // converting string time entries to long epoch
         newThing.startTimeMilli = timeToEpochTime(_date.value.toString(), _startTime.value)
         newThing.endTimeMilli = timeToEpochTime(_date.value.toString(), _endTime.value)
+        newThing.date = _date.value.toString()
     }
 }
 
